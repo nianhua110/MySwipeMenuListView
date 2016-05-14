@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -20,7 +21,8 @@ public class MySwipeMenuListView extends ListView {
     private int MAX_X = 3;
     private float mDownX ;
     private float mDownY;
-    private  SwipeMenuLayout swipeMenuLayout;
+    private  SwipeMenuLayout mTouchView;
+
     public MySwipeMenuListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
@@ -79,7 +81,11 @@ public class MySwipeMenuListView extends ListView {
                 if(dx > MAX_X){
                     Log.i(TAG, "enough offset!");
                 }
-
+                View view =  getChildAt(0);
+                if(view instanceof  SwipeMenuLayout){
+                    mTouchView =(SwipeMenuLayout)view;
+                    mTouchView.onSwipe(ev);
+                }
                 break;
         }
         return super.onTouchEvent(ev);
