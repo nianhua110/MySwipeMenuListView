@@ -20,6 +20,7 @@ public class SwipeMenuLayout extends FrameLayout {
     String TAG= this.getClass().getSimpleName();
     private  View mContentView;
     private  SwipeMenuView mMenuView;
+    private  int Position;
     public SwipeMenuLayout(View view, SwipeMenuView menuView) {
         super(view.getContext());
 
@@ -50,21 +51,29 @@ public class SwipeMenuLayout extends FrameLayout {
         this.addView(mContentView);
     }
 
+    public int getPosition() {
+        return Position;
+    }
+
+    public void setPosition(int position) {
+        Position = position;
+    }
+
     public  void onSwipe(MotionEvent event){
         View view ;
         switch (event.getAction()){
             case MotionEvent.ACTION_MOVE:
                 view = getChildAt(0);
-              //  view.layout((int) event.getX(), view.getTop(), view.getRight(), view.getBottom());
-                Log.i(TAG,"the position of view is "+view.getTop()+"  ;the position of x is "+event.getX()
+                mMenuView.layout((int) event.getX(), view.getTop(), view.getRight(), view.getBottom());
+                Log.i(TAG,"the position of view is "+view.getTop()+"  ;the position of y is "+event.getY()
                 +" ; the posistion of bottom is "+view.getBottom());
 
                 //view.layout(0,(int)(event.getX()), view.getRight(), view.getBottom());
                 break;
             case MotionEvent.ACTION_UP:
                 Log.i(TAG, "Action up");
-                view = getChildAt(0);
-            //    view.layout(0, view.getTop(), view.getRight(), view.getBottom());
+                //postInvalidate();
+                mMenuView.layout(getMeasuredWidth(), 0 , getMeasuredWidth()+ mMenuView.getMeasuredWidth(), mMenuView.getBottom());
                 break;
         }
     }
@@ -72,8 +81,8 @@ public class SwipeMenuLayout extends FrameLayout {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-        mContentView.layout(0,0,getMeasuredWidth(), mContentView.getMeasuredHeight());
-        mMenuView.layout(400, 0 , right, bottom);
+        mContentView.layout(0, 0, getMeasuredWidth(), mContentView.getMeasuredHeight());
+        mMenuView.layout(getMeasuredWidth(), 0 , getMeasuredWidth()+ mMenuView.getMeasuredWidth(), bottom);
         Log.i(TAG, "the top position of current item is " + top);
     }
 

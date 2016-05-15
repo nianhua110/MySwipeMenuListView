@@ -22,6 +22,7 @@ public class MySwipeMenuListView extends ListView {
     private float mDownX ;
     private float mDownY;
     private  SwipeMenuLayout mTouchView;
+    private int mTouchPosition;
 
     public MySwipeMenuListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -74,22 +75,31 @@ public class MySwipeMenuListView extends ListView {
         View view;
         switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:
-               // mDownX = ev.getX();
-            //    mDownY = ev.getY();
+                int oldPosition = mTouchPosition;
+
                 Log.i(TAG, "Action Down");
-            //    Log.i(TAG, "down x is "+mDownX + "  down y is "+ mDownY);
+                mTouchPosition = pointToPosition((int)ev.getX(),(int)ev.getY());
+                view =  getChildAt(mTouchPosition - getFirstVisiblePosition());
+                if(view instanceof  SwipeMenuLayout){
+                    mTouchView =(SwipeMenuLayout)view;
+                    mTouchView.setPosition(mTouchPosition);
+
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                float dx=Math.abs(mDownX- ev.getX());
                 float dy = Math.abs(mDownY - ev.getY());
-              //  Log.i(TAG, "on touch move x "+ev.getX() +" y "+ev.getY());
-               // Log.i(TAG, "dx "+dx+" dy "+dy);
+                mTouchPosition = pointToPosition((int)ev.getX(),(int)ev.getY());
+                if(mTouchPosition != mTouchView.getPosition())
+                {
+                    break;
+                }
+
                 if(dx > MAX_X){
                  //   Log.i(TAG, "enough offset!");
                 }
-                 view =  getChildAt(0);
-                 if(view instanceof  SwipeMenuLayout){
-                    mTouchView =(SwipeMenuLayout)view;
+
+                 if(mTouchView != null){
                     mTouchView.onSwipe(ev);
                 }
                 Log.i(TAG,"Action Move");
@@ -97,9 +107,7 @@ public class MySwipeMenuListView extends ListView {
              //   return  true;
             case MotionEvent.ACTION_UP:
                 Log.i(TAG, "ACtion Up");
-                view =  getChildAt(0);
-                if(view instanceof  SwipeMenuLayout){
-                   mTouchView =(SwipeMenuLayout)view;
+                if(mTouchView != null){
                     mTouchView.onSwipe(ev);
                }
              break;
