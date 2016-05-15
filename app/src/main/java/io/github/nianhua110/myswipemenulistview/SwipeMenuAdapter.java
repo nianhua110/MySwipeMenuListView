@@ -2,6 +2,8 @@ package io.github.nianhua110.myswipemenulistview;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,12 +73,31 @@ public class SwipeMenuAdapter implements WrapperListAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
        // convertView = View.inflate()
         convertView =mListAdapter.getView(position,convertView,parent);
-      SwipeMenuLayout swipeMenuLayout = new SwipeMenuLayout(convertView.getContext());
+        SwipeMenu menu = new SwipeMenu(convertView.getContext());
+        createMenu(menu);
+        SwipeMenuView menuView = new SwipeMenuView((MySwipeMenuListView)parent, menu);
+      SwipeMenuLayout swipeMenuLayout = new SwipeMenuLayout(convertView, menuView);
         Log.i(TAG,"the current item number id is " +num);
         num++;
         return swipeMenuLayout;
     }
 
+
+
+    public void createMenu(SwipeMenu menu) {
+        // Test Code
+        SwipeMenuItem item = new SwipeMenuItem(mContext);
+        item.setTitle("Item 1");
+        item.setBackground(new ColorDrawable(Color.GRAY));
+        item.setWidth(300);
+        menu.addMenuItem(item);
+
+        item = new SwipeMenuItem(mContext);
+        item.setTitle("Item 2");
+        item.setBackground(new ColorDrawable(Color.RED));
+        item.setWidth(300);
+        menu.addMenuItem(item);
+    }
     @Override
     public int getItemViewType(int position) {
         return mListAdapter.getItemViewType(position);

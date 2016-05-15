@@ -58,34 +58,52 @@ public class MySwipeMenuListView extends ListView {
         return  (int)temp;
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
+ //   @Override
+ //   public boolean onInterceptTouchEvent(MotionEvent ev) {
       //  return true;
-        return super.onInterceptTouchEvent(ev);
-    }
+   //     switch (ev.getAction()){
+      //      case  MotionEvent.ACTION_UP:
+           //     return  false;
+
+  //      }
+ //       return super.onInterceptTouchEvent(ev);
+ //   }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-
+        View view;
         switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:
-                mDownX = ev.getX();
-                mDownY = ev.getY();
-                Log.i(TAG, "down x is "+mDownX + "  down y is "+ mDownY);
+               // mDownX = ev.getX();
+            //    mDownY = ev.getY();
+                Log.i(TAG, "Action Down");
+            //    Log.i(TAG, "down x is "+mDownX + "  down y is "+ mDownY);
+                break;
             case MotionEvent.ACTION_MOVE:
-                float dx=Math.abs(mDownX- ev.getX());
+               float dx=Math.abs(mDownX- ev.getX());
                 float dy = Math.abs(mDownY - ev.getY());
-                Log.i(TAG, "on touch move x "+ev.getX() +" y "+ev.getY());
-                Log.i(TAG, "dx "+dx+" dy "+dy);
-
+              //  Log.i(TAG, "on touch move x "+ev.getX() +" y "+ev.getY());
+               // Log.i(TAG, "dx "+dx+" dy "+dy);
                 if(dx > MAX_X){
-                    Log.i(TAG, "enough offset!");
+                 //   Log.i(TAG, "enough offset!");
                 }
-                View view =  getChildAt(0);
-                if(view instanceof  SwipeMenuLayout){
+                 view =  getChildAt(0);
+                 if(view instanceof  SwipeMenuLayout){
                     mTouchView =(SwipeMenuLayout)view;
                     mTouchView.onSwipe(ev);
                 }
+                Log.i(TAG,"Action Move");
+            break;
+             //   return  true;
+            case MotionEvent.ACTION_UP:
+                Log.i(TAG, "ACtion Up");
+                view =  getChildAt(0);
+                if(view instanceof  SwipeMenuLayout){
+                   mTouchView =(SwipeMenuLayout)view;
+                    mTouchView.onSwipe(ev);
+               }
+             break;
+            default:
                 break;
         }
         return super.onTouchEvent(ev);

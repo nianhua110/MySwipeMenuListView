@@ -3,6 +3,7 @@ package io.github.nianhua110.myswipemenulistview;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,6 +24,10 @@ public class SwipeMenuView extends LinearLayout {
         init(context);
     }
 
+    public  SwipeMenuView(MySwipeMenuListView view, SwipeMenu menu){
+        super(view.getContext());
+        init(view.getContext());
+    }
     void init(Context context){
         LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         setOrientation(HORIZONTAL);
