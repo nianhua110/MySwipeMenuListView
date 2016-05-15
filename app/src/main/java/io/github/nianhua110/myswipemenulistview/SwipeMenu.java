@@ -19,7 +19,7 @@ public class SwipeMenu {
         mItems = new ArrayList<>();
     }
 
-    public List<SwipeMenuItem> getmItems() {
+    public List<SwipeMenuItem> getMenuItems() {
         return mItems;
     }
     public  void addMenuItem(SwipeMenuItem item){

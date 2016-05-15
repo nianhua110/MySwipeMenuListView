@@ -55,7 +55,7 @@ public class SwipeMenuLayout extends FrameLayout {
         switch (event.getAction()){
             case MotionEvent.ACTION_MOVE:
                 view = getChildAt(0);
-                view.layout((int) event.getX(), view.getTop(), view.getRight(), view.getBottom());
+              //  view.layout((int) event.getX(), view.getTop(), view.getRight(), view.getBottom());
                 Log.i(TAG,"the position of view is "+view.getTop()+"  ;the position of x is "+event.getX()
                 +" ; the posistion of bottom is "+view.getBottom());
 
@@ -64,7 +64,7 @@ public class SwipeMenuLayout extends FrameLayout {
             case MotionEvent.ACTION_UP:
                 Log.i(TAG, "Action up");
                 view = getChildAt(0);
-                view.layout(0, view.getTop(), view.getRight(), view.getBottom());
+            //    view.layout(0, view.getTop(), view.getRight(), view.getBottom());
                 break;
         }
     }
@@ -73,7 +73,7 @@ public class SwipeMenuLayout extends FrameLayout {
         super.onLayout(changed, left, top, right, bottom);
 
         mContentView.layout(0,0,getMeasuredWidth(), mContentView.getMeasuredHeight());
-        mMenuView.layout(600, 0 , right, bottom);
+        mMenuView.layout(400, 0 , right, bottom);
         Log.i(TAG, "the top position of current item is " + top);
     }
 
