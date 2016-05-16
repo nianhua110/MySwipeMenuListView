@@ -84,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return mAppList.size();
+          return  3;
+          // /  return mAppList.size();
         }
 
         @Override

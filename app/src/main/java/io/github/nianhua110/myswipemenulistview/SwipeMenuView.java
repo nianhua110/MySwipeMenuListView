@@ -22,12 +22,12 @@ public class SwipeMenuView extends LinearLayout {
     private MySwipeMenuListView mListView ;
     public SwipeMenuView(Context context) {
         super(context);
-        init(context);
+     //   init(context);
     }
 
     public SwipeMenuView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+    //    init(context);
     }
 
     public  SwipeMenuView(MySwipeMenuListView view, SwipeMenu menu){

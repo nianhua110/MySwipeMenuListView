@@ -83,7 +83,7 @@ public class MySwipeMenuListView extends ListView {
                 if(view instanceof  SwipeMenuLayout){
                     mTouchView =(SwipeMenuLayout)view;
                     mTouchView.setPosition(mTouchPosition);
-
+                    mTouchView.onSwipe(ev);
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
