@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,9 +19,22 @@ import java.util.List;
 /**
  * Created by kankan on 2016/5/14.
  */
-public class SwipeMenuView extends LinearLayout {
+public class SwipeMenuView extends LinearLayout implements View.OnClickListener {
+    private String TAG = this.getClass().getSimpleName();
     private  SwipeMenu mMenu;
     private MySwipeMenuListView mListView ;
+    private  SwipeMenuLayout mLayout;
+    private OnSwipeItemClickListener onItemClickListener;
+    private int position;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     public SwipeMenuView(Context context) {
         super(context);
      //   init(context);
@@ -66,7 +81,7 @@ public class SwipeMenuView extends LinearLayout {
         parent.setOrientation(LinearLayout.VERTICAL);
         parent.setLayoutParams(params);
         parent.setBackgroundDrawable(item.getBackground());
-      //  parent.setOnClickListener(this);
+        parent.setOnClickListener(this);
         addView(parent);
 
         if (item.getIcon() != null) {
@@ -92,5 +107,37 @@ public class SwipeMenuView extends LinearLayout {
         tv.setTextSize(item.getTitleSize());
         tv.setTextColor(item.getTitleColor());
         return tv;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.i(TAG, "on Click!0");
+        if(onItemClickListener != null && mLayout.isOpen() ){
+            onItemClickListener.onItemClick(this, mMenu, v.getId());
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.i(TAG, "on Touch Event");
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        Log.i(TAG, "on InterceptTouchEvent");
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    public void setmLayout(SwipeMenuLayout mLayout) {
+        this.mLayout = mLayout;
+    }
+
+    public void setOnItemClickListener(OnSwipeItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public  interface OnSwipeItemClickListener{
+        void onItemClick(SwipeMenuView view, SwipeMenu menu, int index);
     }
 }

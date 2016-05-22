@@ -13,7 +13,7 @@ import android.widget.WrapperListAdapter;
 /**
  * Created by kankan on 2016/5/12.
  */
-public class SwipeMenuAdapter implements WrapperListAdapter {
+public class SwipeMenuAdapter implements WrapperListAdapter, SwipeMenuView.OnSwipeItemClickListener {
     String TAG = this.getClass().getSimpleName();
     Context mContext;
     ListAdapter mListAdapter;
@@ -76,6 +76,7 @@ public class SwipeMenuAdapter implements WrapperListAdapter {
         SwipeMenu menu = new SwipeMenu(convertView.getContext());
         createMenu(menu);
         SwipeMenuView menuView = new SwipeMenuView((MySwipeMenuListView)parent, menu);
+        menuView.setOnItemClickListener(this);
       SwipeMenuLayout swipeMenuLayout = new SwipeMenuLayout(convertView, menuView);
         Log.i(TAG,"the current item number id is " +num);
         num++;
@@ -91,7 +92,7 @@ public class SwipeMenuAdapter implements WrapperListAdapter {
         item.setTitleColor(Color.BLACK);
         item.setTitleSize(20);
         item.setBackground(new ColorDrawable(Color.GRAY));
-        item.setWidth(300);
+        item.setWidth(200);
         menu.addMenuItem(item);
 
         item = new SwipeMenuItem(mContext);
@@ -99,7 +100,7 @@ public class SwipeMenuAdapter implements WrapperListAdapter {
         item.setTitleColor(Color.BLACK);
         item.setTitleSize(20);
         item.setBackground(new ColorDrawable(Color.RED));
-        item.setWidth(300);
+        item.setWidth(200);
         menu.addMenuItem(item);
     }
     @Override
@@ -115,5 +116,10 @@ public class SwipeMenuAdapter implements WrapperListAdapter {
     @Override
     public boolean isEmpty() {
         return mListAdapter.isEmpty();
+    }
+
+    @Override
+    public void onItemClick(SwipeMenuView view, SwipeMenu menu, int index) {
+            Log.i(TAG, "onItemClick ,该方法会被匿名子类覆盖掉");
     }
 }
